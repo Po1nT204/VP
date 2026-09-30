@@ -1,0 +1,14 @@
+{
+  "name": "movie-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node --dns-result-order=ipv4first bot.js"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.4",
+    "grammy": "^1.21.0",
+    "undici": "^7.30.0"
+  }
+}

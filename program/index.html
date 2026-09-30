@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Конструктор тренировок</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- ===== ЛЕВАЯ ПАНЕЛЬ: настройки ===== -->
+      <aside class="panel settings">
+        <h1>ТРЕНИРОВКА</h1>
+        <p class="subtitle">Собери свою сессию за 10 секунд</p>
+
+        <label class="field">
+          <span>Цель</span>
+          <select id="goal">
+            <option value="strength">Сила</option>
+            <option value="mass">Масса</option>
+            <option value="weightloss">Похудение</option>
+            <option value="endurance">Выносливость</option>
+            <option value="technique">Техника / Растяжка</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Уровень</span>
+          <select id="level">
+            <option value="novice">Новичок</option>
+            <option value="medium" selected>Средний</option>
+            <option value="advanced">Продвинутый</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Длительность: <b id="durLabel">60 мин</b></span>
+          <input
+            type="range"
+            id="duration"
+            min="20"
+            max="120"
+            step="5"
+            value="60"
+          />
+        </label>
+
+        <div class="field">
+          <span>Оборудование</span>
+          <div class="chips" id="equipChips">
+            <button data-eq="bodyweight" class="chip active">
+              Без инвентаря
+            </button>
+            <button data-eq="dumbbell" class="chip">Гантели</button>
+            <button data-eq="barbell" class="chip">Штанга</button>
+            <button data-eq="kettlebell" class="chip">Гиря</button>
+            <button data-eq="band" class="chip">Резинки</button>
+            <button data-eq="machine" class="chip">Тренажёр</button>
+            <button data-eq="pullup" class="chip">Турник</button>
+            <button data-eq="bench" class="chip">Скамья</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span>Фокус на группы мышц</span>
+          <div class="chips" id="focusChips">
+            <button data-focus="all" class="chip active">Всё тело</button>
+            <button data-focus="top" class="chip">Верх</button>
+            <button data-focus="bottom" class="chip">Низ</button>
+            <button data-focus="core" class="chip">Пресс/кор</button>
+            <button data-focus="cardio" class="chip">Кардио</button>
+            <button data-focus="stretch" class="chip">Растяжка</button>
+          </div>
+        </div>
+
+        <label class="field">
+          <span>Тренировок в неделю</span>
+          <select id="perWeek">
+            <option>1</option>
+            <option selected>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+          </select>
+        </label>
+
+        <button id="generateBtn" class="primary big">
+          🎲 Сгенерировать тренировку
+        </button>
+        <p class="hint" id="hint"></p>
+      </aside>
+
+      <!-- ===== ЦЕНТР: статистика + список ===== -->
+      <main class="main">
+        <div class="stats-row">
+          <div class="stat-card">
+            <h3>Нагрузка по группам</h3>
+            <svg
+              id="histogram"
+              viewBox="0 0 380 200"
+              preserveAspectRatio="xMidYMid meet"
+            ></svg>
+          </div>
+          <div class="stat-card narrow">
+            <h3>Время</h3>
+            <div class="donut-wrap">
+              <svg id="donut" viewBox="0 0 160 160"></svg>
+              <div class="donut-label">
+                <b id="totalMin">0</b>
+                <span>из <i id="targetMin">0</i> мин</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="workout-head">
+          <h2 id="workoutTitle">Тренировка</h2>
+          <div class="head-actions">
+            <button id="timerBtn" class="ghost" title="Таймер">⏱ Таймер</button>
+            <button id="downloadBtn" class="ghost" title="Скачать .txt">
+              ⬇ Скачать
+            </button>
+            <button id="clearBtn" class="ghost" title="Очистить">
+              ✕ Очистить
+            </button>
+          </div>
+        </div>
+
+        <div id="emptyState" class="empty">
+          <div class="empty-icon">💪</div>
+          <p>Настрой параметры слева и нажми «Сгенерировать»</p>
+        </div>
+
+        <ol id="workoutList" class="workout-list"></ol>
+
+        <div class="recent-block hidden" id="recentBlock">
+          <h3>Последние тренировки</h3>
+          <div id="recentList" class="recent-list"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ===== МОДАЛКА ТАЙМЕРА ===== -->
+    <div id="timerModal" class="modal hidden">
+      <div class="modal-box">
+        <h2 id="timerExName">Упражнение</h2>
+        <div class="timer-circle">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="88" class="ring-bg" />
+            <circle cx="100" cy="100" r="88" class="ring-fg" id="ringFg" />
+          </svg>
+          <div class="timer-num" id="timerNum">01:00</div>
+        </div>
+        <div class="timer-actions">
+          <button id="timerPause" class="ghost">⏸ Пауза</button>
+          <button id="timerSkip" class="primary">▶ Далее</button>
+          <button id="timerClose" class="ghost">✕ Закрыть</button>
+        </div>
+        <p class="timer-hint">Пробел — пауза · → — следующее</p>
+      </div>
+    </div>
+
+    <script src="exercises.js"></script>
+    <script src="data.js"></script>
+    <script src="engine.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

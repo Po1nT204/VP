@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wraith Survivor</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game"></canvas>
+
+      <button id="muteBtn" title="Звук вкл/выкл">🔊</button>
+
+      <div id="menu" class="overlay">
+        <h1>WRAITH <span>SURVIVOR</span></h1>
+        <p class="subtitle">Выбери своего героя</p>
+        <div id="charRow" class="char-row"></div>
+        <div class="controls-hint">
+          <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> — движение</div>
+          <div><kbd>SPACE</kbd> — рывок (неуязвимость)</div>
+          <div><kbd>Q</kbd><kbd>E</kbd> — уникальные способности героя</div>
+          <div>Атака автоматическая. Собирай кристаллы.</div>
+        </div>
+        <button id="startBtn" disabled>Выбери героя</button>
+      </div>
+
+      <div id="levelup" class="overlay hidden">
+        <h2>Уровень <span id="luLevel">2</span></h2>
+        <p class="subtitle">Выбери улучшение</p>
+        <div id="cardRow" class="card-row"></div>
+      </div>
+
+      <div id="gameover" class="overlay hidden">
+        <h1>Тьма поглотила тебя</h1>
+        <div class="stats">
+          <div><span id="goTime">0:00</span><label>время</label></div>
+          <div><span id="goKills">0</span><label>убийств</label></div>
+          <div><span id="goLevel">1</span><label>уровень</label></div>
+          <div><span id="goBosses">0</span><label>боссов</label></div>
+        </div>
+        <button id="restartBtn">Ещё раз</button>
+      </div>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="sound.js"></script>
+    <script src="abilities.js"></script>
+    <script src="sprites.js"></script>
+    <script src="entities.js"></script>
+    <script src="weapons.js"></script>
+    <script src="upgrades.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
